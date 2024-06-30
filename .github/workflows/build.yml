@@ -39,6 +39,8 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y \
             libx11-dev libxcursor-dev libxi-dev
+        fi
+        echo "Dependencies installed"
 
     - name: Generating Makefiles
       shell: bash
@@ -48,6 +50,7 @@ jobs:
         else
           export enable_ccache=on
         fi
+        echo "Enable ccache: $enable_ccache"
         curl -L https://github.com/blueloveTH/aseprite/releases/download/v0.01/skia.zip --output skia.zip
         7z x skia.zip
         cmake -S . -B build -G Ninja \
@@ -58,11 +61,13 @@ jobs:
           -DSKIA_DIR=./skia \
           -DSKIA_LIBRARY_DIR=./skia/out/Release-x64 \
           -DSKIA_LIBRARY=./skia/out/Release-x64/skia.lib
+        echo "Makefiles generated"
 
     - name: Compiling
       shell: bash
       run: |
         cd build && ninja
+        echo "Compilation finished"
 
     - uses: actions/upload-artifact@v3
       with:
