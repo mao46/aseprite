@@ -66,8 +66,6 @@ jobs:
 
             libx11-dev libxcursor-dev libxi-dev
 
-        fi
-
     - name: Generating Makefiles
 
       shell: bash
